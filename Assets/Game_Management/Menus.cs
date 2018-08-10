@@ -9,9 +9,12 @@ public class Menus : MonoBehaviour {
 	public RectTransform leftPanel, rightPanel;
 	public RectTransform barPanel;
 
-	public Vector2 leftHide, leftShow;
-	public Vector2 rightHide, rightShow;
-	public Vector2 barHide, barShow;
+	public float animationDuration = 0.5f;
+	public AnimationCurve animationCurve;
+
+	Vector2 leftHide, leftShow;
+	Vector2 rightHide, rightShow;
+	Vector2 barHide, barShow;
 
 	// Use this for initialization
 	void Awake() {
@@ -35,12 +38,42 @@ public class Menus : MonoBehaviour {
 
 	}
 
-	public void OpenMenu(bool left, GameObject menu) {
+	IEnumerator leftRoutine, rightRoutine;
+	GameObject leftObject, rightObject;
+	int leftId, rightId;
+
+	public void OpenMenu(bool left, GameObject menu, int id) {
 		RectTransform target = left ? leftPanel : rightPanel;
+		if (left) {
+			target = leftPanel;
+			if(leftRoutine != null) StopCoroutine (leftRoutine);
+			if(leftObject != null) Destroy (leftObject);
+			StartCoroutine (leftRoutine = Utils.MoveRoutine2 (target, target.position, leftShow, animationDuration, animationCurve));
+		} else {
+			target = rightPanel;
+			if(rightRoutine != null) StopCoroutine (rightRoutine);
+			if(rightObject != null) Destroy (rightObject);
+			StartCoroutine (rightRoutine = Utils.MoveRoutine2 (target, target.position, rightShow, animationDuration, animationCurve));
+		}
 
-		if (target.childCount != 0) 
-			Destroy (target.GetChild (0).gameObject);
+		if (left) {
+			if (leftId == id) return;
+			else leftId = id;
+		} else {
+			if (rightId == id) return;
+			else rightId = id;
+		}
 
-
+		Instantiate (menu, target);
 	}
+	public void CloseMenu(bool left) {
+		if (left) {
+			if(leftRoutine != null) StopCoroutine (leftRoutine);
+			StartCoroutine (leftRoutine = Utils.MoveRoutine2 (leftPanel, leftPanel.position, leftHide, animationDuration, animationCurve));
+		} else {
+			if(rightRoutine != null) StopCoroutine (rightRoutine);
+			StartCoroutine (rightRoutine = Utils.MoveRoutine2 (rightPanel, rightPanel.position, rightHide, animationDuration, animationCurve));
+		}
+	}
+
 }
