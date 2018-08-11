@@ -14,6 +14,7 @@ public class Worker {
 	public float efficiency; //multiplicador para lo que se
 
 	private float _happiness; //status in game (0 == lost)
+	private bool _isWatched;
 	private bool _isLeaving;
 	private bool _left;
 	private float _walkSpeed;
@@ -86,7 +87,12 @@ public class Worker {
 			_modelTransform.Translate(0f, 0f, dir * _walkSpeed * deltaTime);
 			return;
 		}
-		_happiness = Mathf.Clamp01 (_happiness - laziness * Random.value * 0.1f);
+
+		if (!_isWatched) {
+			_happiness = Mathf.Clamp01 (_happiness - laziness * Random.value * 0.5f);
+		} else {
+			_happiness = Mathf.Clamp01 (_happiness + efficiency * Random.value * 0.5f);
+		}
 	}
 
 	public bool WantsToLeave(){
@@ -95,5 +101,13 @@ public class Worker {
 
 	public void LeaveDesk(){
 		_isLeaving = true;
+	}
+
+	public void SetIsWatched(){
+		_isWatched = true;
+	}
+
+	public void SetUnwatched(){
+		_isWatched = false;
 	}
 }
