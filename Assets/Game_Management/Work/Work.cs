@@ -25,7 +25,7 @@ public class Work : BuildingPanel {
 		float ratio = 1f;
 		foreach (Manager m in Controller.instance.managers)
 			ratio *= m.efficiency;
-		ratioManagers.text = ratio + "";
+		ratioManagers.text = ratio.ToString("0.00");
 
 		boughtFloors.text = Controller.instance.boughtFloors + "";
 		workersPerFloor.text = Controller.instance.currentWorkersPerFloor + "";
@@ -36,4 +36,13 @@ public class Work : BuildingPanel {
 		buyManagerPerFloor.text = Mathf.Pow (Controller.instance.baseCostManagersPerFloor, 1f + Controller.instance.currentManagersPerFloor) + "";
 	}
 
+	public void BuyFloor() {
+		if (Controller.instance.BuyFloor ()) UpdateValues ();
+	}
+	public void BuyWorkerPerFloor() {
+		if (Controller.instance.BuyWorkerPerFloor ()) UpdateValues ();
+	}
+	public void BuyManagerPerFloor() {
+		if (Controller.instance.BuyManagerPerFloor ()) UpdateValues ();
+	}
 }

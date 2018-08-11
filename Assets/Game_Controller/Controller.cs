@@ -17,6 +17,9 @@ public class Controller : MonoBehaviour {
 		gamesThisMonth = 0;
 		progressionMonthly = 1f;
 		money = 3000f;
+
+		GetNewEttWorkers ();
+		GetNewEttManagers ();
 	}
 
 	[Header("General")]
@@ -58,14 +61,14 @@ public class Controller : MonoBehaviour {
 
 	public float baseIncomePerMonth = 300f;
 
-	public int boughtFloors = 0;
+	public int boughtFloors = 1;
 	public int maxFloors = 5;
-	public int currentWorkersPerFloor = 0;
+	public int currentWorkersPerFloor = 2;
 	public int currentManagersPerFloor = 0;
 	public int maxWorkersPerFloor = 20;
 	public int maxManagersPerFloor = 1;
 
-	public float baseCostFloor = 1000f;
+	public float baseCostFloor = 100f;
 	public float baseCostWorkersPerFloor = 20f;
 	public float baseCostManagersPerFloor = 4000f;
 
@@ -91,9 +94,34 @@ public class Controller : MonoBehaviour {
 		return baseIncomePerMonth;
 	}
 
+	public bool BuyFloor() {
+		if (boughtFloors > maxFloors) return false;
+		float cost = Mathf.Pow (baseCostFloor, 1f + boughtFloors);
+		if (money < cost) return false;
+		money -= cost;
+		++boughtFloors;
+		return true;
+	}
+	public bool BuyWorkerPerFloor() {
+		if (currentWorkersPerFloor > maxWorkersPerFloor) return false;
+		float cost = Mathf.Pow (baseCostWorkersPerFloor, 1f + currentWorkersPerFloor);
+		if (money < cost) return false;
+		money -= cost;
+		++currentWorkersPerFloor;
+		return true;
+	}
+	public bool BuyManagerPerFloor() {
+		if (currentManagersPerFloor > maxManagersPerFloor) return false;
+		float cost = Mathf.Pow (baseCostManagersPerFloor, 1f + currentManagersPerFloor);
+		if (money < cost) return false;
+		money -= cost;
+		++currentManagersPerFloor;
+		return true;
+	}
+
 	[Header("ETT")]
-	public int currentEttWorkers = 0;
-	public int currentEttManagers = 0;
+	public int currentEttWorkers = 1;
+	public int currentEttManagers = 3;
 	public int maxEttWorkers = 10;
 	public int maxEttManagers = 3;
 	public float baseCostEttWorkers = 10f;
@@ -104,7 +132,7 @@ public class Controller : MonoBehaviour {
 	public bool[] ettManagersBought;
 
 	public void GetNewEttWorkers() {
-		if (ettWorkers.Length != currentEttWorkers) {
+		if (ettWorkers == null || ettWorkers.Length != currentEttWorkers) {
 			ettWorkers = new Worker[currentEttWorkers];
 			ettWorkersBought = new bool[currentEttWorkers];	
 		}
@@ -114,7 +142,7 @@ public class Controller : MonoBehaviour {
 		}
 	}
 	public void GetNewEttManagers() {
-		if (ettManagers.Length != currentEttManagers) {
+		if (ettManagers == null || ettManagers.Length != currentEttManagers) {
 			ettManagers = new Manager[currentEttManagers];
 			ettManagersBought = new bool[currentEttWorkers];	
 		}
@@ -125,10 +153,13 @@ public class Controller : MonoBehaviour {
 	}
 
 	public bool BuyWorker(int i) {
-		if (workers.Count > boughtFloors * currentWorkersPerFloor) return false;
+		print (workers.Count + ">=" + boughtFloors + "*" + currentWorkersPerFloor);
+		if (workers.Count >= boughtFloors * currentWorkersPerFloor) return false;
+		print (money + "<" + Mathf.Pow (baseCostEttWorkers, (float)workers.Count));
 		if (money < Mathf.Pow (baseCostEttWorkers, (float) workers.Count)) return false;
 		workers.Add (ettWorkers[i]);
 		ettWorkersBought [i] = true;
+		money -= Mathf.Pow (baseCostEttWorkers, (float)workers.Count);
 		return true;
 	}
 	public bool BuyManager(int i) {
@@ -136,6 +167,7 @@ public class Controller : MonoBehaviour {
 		if (money < Mathf.Pow (baseCostEttManagers, (float) managers.Count)) return false;
 		managers.Add (ettManagers[i]);
 		ettManagersBought [i] = true;
+		money -= Mathf.Pow (baseCostEttManagers, (float)managers.Count);
 		return true;
 	}
 
