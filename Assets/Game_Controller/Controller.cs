@@ -10,7 +10,6 @@ public class Controller : MonoBehaviour {
 		instance = this;
 		DontDestroyOnLoad (gameObject);
 	}
-	
 	void Start() {
 		workers = new List<Worker>();
 		managers = new List<Manager> ();
