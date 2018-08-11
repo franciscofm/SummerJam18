@@ -91,15 +91,6 @@ public class Controller : MonoBehaviour {
 		return baseIncomePerMonth;
 	}
 
-	public void BuyWorker(Worker w) {
-		if (workers.Count > boughtFloors * currentWorkersPerFloor) return;
-		workers.Add (w);
-	}
-	public void BuyManager(Manager m) {
-		if (managers.Count > boughtFloors * currentManagersPerFloor) return;
-		managers.Add (m);
-	}
-
 	[Header("ETT")]
 	public int currentEttWorkers = 0;
 	public int currentEttManagers = 0;
@@ -109,18 +100,43 @@ public class Controller : MonoBehaviour {
 	public float baseCostEttManagers = 50f;
 	public Worker[] ettWorkers;
 	public Manager[] ettManagers;
+	public bool[] ettWorkersBought;
+	public bool[] ettManagersBought;
 
 	public void GetNewEttWorkers() {
-		if (ettWorkers.Length != currentEttWorkers)
+		if (ettWorkers.Length != currentEttWorkers) {
 			ettWorkers = new Worker[currentEttWorkers];
-		for (int i = 0; i < ettWorkers.Length; ++i)
+			ettWorkersBought = new bool[currentEttWorkers];	
+		}
+		for (int i = 0; i < ettWorkers.Length; ++i) {
 			ettWorkers [i] = new Worker ();
+			ettWorkersBought [i] = false;
+		}
 	}
 	public void GetNewEttManagers() {
-		if (ettManagers.Length != currentEttManagers)
+		if (ettManagers.Length != currentEttManagers) {
 			ettManagers = new Manager[currentEttManagers];
-		for (int i = 0; i < ettManagers.Length; ++i)
+			ettManagersBought = new bool[currentEttWorkers];	
+		}
+		for (int i = 0; i < ettManagers.Length; ++i) {
 			ettManagers [i] = new Manager ();
+			ettManagersBought [i] = false;
+		}
+	}
+
+	public bool BuyWorker(int i) {
+		if (workers.Count > boughtFloors * currentWorkersPerFloor) return false;
+		if (money < Mathf.Pow (baseCostEttWorkers, (float) workers.Count)) return false;
+		workers.Add (ettWorkers[i]);
+		ettWorkersBought [i] = true;
+		return true;
+	}
+	public bool BuyManager(int i) {
+		if (managers.Count > boughtFloors * currentManagersPerFloor) return false;
+		if (money < Mathf.Pow (baseCostEttManagers, (float) managers.Count)) return false;
+		managers.Add (ettManagers[i]);
+		ettManagersBought [i] = true;
+		return true;
 	}
 
 	//Bank
