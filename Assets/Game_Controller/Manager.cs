@@ -39,5 +39,6 @@ public class Manager {
 		proficiency = Mathf.Clamp (proficiency + 0.05f, 0f, 1f);
 		efficiency = Mathf.Clamp (efficiency + 0.03f, 0f, 1f);
 		coworking = Mathf.Clamp (coworking + 0.05f, 0f, 1f);
+		++level;
 	}
 }

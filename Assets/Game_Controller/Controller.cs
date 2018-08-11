@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour {
 
-	public Controller instance;
+	public static Controller instance;
 	
 	void Awake() {
 		instance = this;
@@ -78,9 +78,12 @@ public class Controller : MonoBehaviour {
 		foreach (Worker w in workers) {
 			total += baseIncomePerGameWorker * w.efficiency;
 			lost += baseIncomePerGameWorker * (1f - w.efficiency);
+			w.Work ();
 		}
-		foreach (Manager m in managers)
+		foreach (Manager m in managers) {
 			lost *= (1f - m.efficiency);
+			m.Work ();
+		}
 		total += lost;
 		return total;
 	}
@@ -125,11 +128,6 @@ public class Controller : MonoBehaviour {
 	//Stock-Market
 
 	//Mafia
-	
-	string[] months = new string[]{ 
-		"January", "February", "Match", "April", "May", "June", 
-		"July", "August", "September", "October", "November", "December" 
-	};
 
 
 }

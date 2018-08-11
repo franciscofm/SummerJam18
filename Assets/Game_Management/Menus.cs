@@ -64,7 +64,7 @@ public class Menus : MonoBehaviour {
 			else rightId = id;
 		}
 
-		Instantiate (menu, target);
+		Instantiate (menu, target).GetComponent<BuildingPanel>().UpdateValues();
 	}
 	public void CloseMenu(bool left) {
 		if (left) {

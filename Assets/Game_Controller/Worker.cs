@@ -36,6 +36,7 @@ public class Worker {
 		if (level > 4) return;
 		laziness = Mathf.Clamp (laziness - 0.07f, 0f, 1f);
 		efficiency = Mathf.Clamp (efficiency + 0.1f, 0f, 1f);
+		++level;
 	}
 
 	public Manager Promote() {
