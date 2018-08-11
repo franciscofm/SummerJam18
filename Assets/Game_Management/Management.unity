@@ -308,6 +308,70 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 277976272}
+--- !u!1 &314794349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 314794351}
+  - component: {fileID: 314794350}
+  m_Layer: 0
+  m_Name: Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &314794350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 314794349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa3ec9fc5a037974289cc2bb3b1bda01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instance: {fileID: 0}
+  year: 2018
+  month: 3
+  money: 0
+  gamesThisMonth: 0
+  gamesPerMonth: 4
+  baseIncomePerGame: 100
+  baseIncomePerGameWorker: 20
+  baseIncomePerMonth: 300
+  boughtFloors: 0
+  maxFloors: 5
+  currentWorkersPerFloor: 0
+  currentManagersPerFloor: 0
+  maxWorkersPerFloor: 20
+  maxManagersPerFloor: 1
+  baseCostFloor: 1000
+  baseCostWorkersPerFloor: 20
+  baseCostManagersPerFloor: 4000
+  currentEttWorkers: 0
+  currentEttManagers: 0
+  maxEttWorkers: 10
+  maxEttManagers: 3
+  baseCostEttWorkers: 10
+  baseCostEttManagers: 50
+--- !u!4 &314794351
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 314794349}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 735.9149, y: 543.6405, z: 21.45326}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &329787107
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.29411763, g: 0.15787196, b: 0.15787196, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -425,7 +489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.29411763, g: 0.15787196, b: 0.15787196, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

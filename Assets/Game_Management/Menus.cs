@@ -76,4 +76,10 @@ public class Menus : MonoBehaviour {
 		}
 	}
 
+	public void OpenBar() {
+
+	}
+	public void CloseBar() {
+
+	}
 }
